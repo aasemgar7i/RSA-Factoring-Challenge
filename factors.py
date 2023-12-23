@@ -1,0 +1,31 @@
+import sys
+from math import isqrt
+
+def factorize(n):
+    for i in range(2, isqrt(n) + 1):
+        if n % i == 0:
+            return i, n // i
+    return n, 1
+
+def main(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                number = int(line.strip())
+                factor1, factor2 = factorize(number)
+                print(f"{number}={factor1}*{factor2}")
+
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        sys.exit(1)
+    except ValueError:
+        print("Error: Invalid input in the file. All lines must contain valid natural numbers greater than 1.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+    main(file_path)
